@@ -9,17 +9,18 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', Arial, sans-serif; display: flex; height: 100vh; background-color: #f4f6f8; }
     #map { flex: 1; height: 100%; }
-    #sidebar { width: 400px; height: 100%; background: #ffffff; box-shadow: -2px 0 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; z-index: 1000; }
+    #sidebar { width: 420px; height: 100%; background: #ffffff; box-shadow: -2px 0 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; z-index: 1000; }
     .sidebar-header { background: #1B4D3E; color: white; padding: 20px; border-bottom: 4px solid #2C6B56; }
     .sidebar-header h1 { font-size: 1.3rem; font-weight: 600; margin-bottom: 5px; }
     .sidebar-header p { font-size: 0.85rem; opacity: 0.85; }
     .sidebar-content { padding: 20px; overflow-y: auto; flex: 1; }
     .pueblo-badge { display: inline-block; background: #e8f5e9; color: #1B4D3E; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; margin-bottom: 12px; }
-    .categoria-titulo { font-size: 0.95rem; font-weight: bold; color: #2C6B56; margin-top: 15px; margin-bottom: 8px; border-bottom: 1px dashed #2C6B56; padding-bottom: 3px; }
-    .palabra-card { background: #f9fbf9; border-left: 4px solid #1B4D3E; padding: 14px; border-radius: 6px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .palabra-nombre { font-size: 1.1rem; font-weight: bold; color: #111; margin-bottom: 4px; }
-    .palabra-tipo { font-size: 0.85rem; color: #666; font-style: italic; margin-bottom: 8px; }
+    .categoria-titulo { font-size: 0.95rem; font-weight: bold; color: #2C6B56; margin-top: 18px; margin-bottom: 10px; border-bottom: 2px solid #e0e0e0; padding-bottom: 4px; }
+    .palabra-card { background: #f9fbf9; border-left: 4px solid #1B4D3E; padding: 14px; border-radius: 6px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .palabra-nombre { font-size: 1.15rem; font-weight: bold; color: #111; margin-bottom: 4px; }
+    .palabra-tipo { font-size: 0.85rem; color: #666; font-style: italic; margin-bottom: 6px; }
     .palabra-def { font-size: 0.92rem; color: #333; margin: 6px 0; line-height: 1.4; }
+    .palabra-pueblos { font-size: 0.85rem; color: #d97706; background: #fffbe6; padding: 5px 8px; border-radius: 4px; margin-top: 6px; border: 1px solid #ffe58f; }
     .palabra-ejemplo { font-size: 0.88rem; color: #2C6B56; background: #eef6f2; padding: 6px 10px; border-radius: 4px; margin-top: 8px; }
     .empty-state { text-align: center; color: #888; margin-top: 40px; font-size: 0.95rem; line-height: 1.5; }
   </style>
@@ -36,7 +37,7 @@
         <div class="empty-state">
           📍 <br><br>
           <strong>Selecciona un pueblo en el mapa</strong><br>
-          Haz clic sobre cualquier municipio para desplegar sus términos locales, categoría, definición y ejemplos.
+          Haz clic sobre cualquier municipio para desplegar sus términos locales clasificados por extensión geográfica.
         </div>
       </div>
     </div>
@@ -53,7 +54,19 @@
         comarca: "La Loma",
         coordenadas: [37.9961, -3.5469],
         categorias: {
-          "🏠 Vida Cotidiana / Léxico Local": [
+          "🟢 Solo Lupión": [
+            /* Aquí podrás añadir palabras exclusivas de Lupión */
+          ],
+          "🟡 Lupión y otros pueblos": [
+            { 
+              termino: "Acendría", 
+              tipo: "Sustantivo",
+              def: "Palabra utilizada en Lupión para referirse a la sandía.", 
+              pueblos: "Martos y Pegalajar",
+              ejemplo: "«He comprado una acendría para esta tarde»." 
+            }
+          ],
+          "🔵 Palabra jiennense": [
             { 
               termino: "Almanaque", 
               tipo: "Sustantivo",
@@ -67,7 +80,7 @@
         comarca: "La Loma",
         coordenadas: [38.0078, -3.3686],
         categorias: {
-          "🌾 Campo": [
+          "🔵 Palabra jiennense": [
             { 
               termino: "Esaire", 
               tipo: "Sustantivo",
@@ -81,7 +94,7 @@
         comarca: "La Loma",
         coordenadas: [37.9936, -3.4688],
         categorias: {
-          "🏠 Vida Cotidiana": [
+          "🔵 Palabra jiennense": [
             { 
               termino: "Abonico", 
               tipo: "Adverbio",
@@ -95,7 +108,7 @@
         comarca: "Sierra de Cazorla",
         coordenadas: [37.9137, -3.0031],
         categorias: {
-          "🍲 Gastronomía": [
+          "🟡 Lupión y otros pueblos": [
             { 
               termino: "Rin-ran", 
               tipo: "Sustantivo",
@@ -109,7 +122,7 @@
         comarca: "Sierra Sur",
         coordenadas: [37.4614, -3.9231],
         categorias: {
-          "🏠 Vida Cotidiana": [
+          "🔵 Palabra jiennense": [
             { 
               termino: "Apolismado", 
               tipo: "Adjetivo",
@@ -123,7 +136,7 @@
         comarca: "Campiña de Jaén",
         coordenadas: [38.0392, -4.0536],
         categorias: {
-          "🌾 Campo": [
+          "🔵 Palabra jiennense": [
             { 
               termino: "Vara", 
               tipo: "Sustantivo",
@@ -137,7 +150,7 @@
         comarca: "Comarca Metropolitana",
         coordenadas: [37.7796, -3.7849],
         categorias: {
-          "🍲 Gastronomía": [
+          "🔵 Palabra jiennense": [
             { 
               termino: "Pipirrana", 
               tipo: "Sustantivo",
@@ -168,17 +181,20 @@
       html += `<h2 style="color:#1B4D3E; margin-bottom:15px;">${nombrePueblo}</h2>`;
 
       for (let categoria in pueblo.categorias) {
-        html += `<div class="categoria-titulo">${categoria}</div>`;
-        pueblo.categorias[categoria].forEach(p => {
-          html += `
-            <div class="palabra-card">
-              <div class="palabra-nombre">${p.termino}</div>
-              <div class="palabra-tipo">📖 ${p.tipo}</div>
-              <div class="palabra-def">${p.def}</div>
-              <div class="palabra-ejemplo">🗣️ <strong>Ejemplo:</strong> ${p.ejemplo}</div>
-            </div>
-          `;
-        });
+        if (pueblo.categorias[categoria].length > 0) {
+          html += `<div class="categoria-titulo">${categoria}</div>`;
+          pueblo.categorias[categoria].forEach(p => {
+            html += `
+              <div class="palabra-card">
+                <div class="palabra-nombre">${p.termino}</div>
+                <div class="palabra-tipo">📖 ${p.tipo}</div>
+                <div class="palabra-def">${p.def}</div>
+                ${p.pueblos ? `<div class="palabra-pueblos">📍 <strong>También documentada en:</strong> ${p.pueblos}</div>` : ''}
+                <div class="palabra-ejemplo">💬 <strong>Ejemplo:</strong> ${p.ejemplo}</div>
+              </div>
+            `;
+          });
+        }
       }
 
       panel.innerHTML = html;
