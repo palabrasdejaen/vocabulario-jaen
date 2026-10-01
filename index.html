@@ -152,6 +152,13 @@
         categorias: {
           "🔵 Palabra jiennense": [
             { 
+              termino: "Badil", 
+              tipo: "Sustantivo",
+              def: "Recogedor utilizado para recoger la suciedad o basura después de barrer.", 
+              pueblos: "Documentada en diferentes localidades de la provincia de Jaén",
+              ejemplo: "«Pásame el badil para recoger lo que he barrido»." 
+            },
+            { 
               termino: "Pipirrana", 
               tipo: "Sustantivo",
               def: "Ensalada tradicional de tomate, pimiento, huevo cocido y atún bien majados con aceite de oliva.", 
@@ -189,7 +196,7 @@
                 <div class="palabra-nombre">${p.termino}</div>
                 <div class="palabra-tipo">📖 ${p.tipo}</div>
                 <div class="palabra-def">${p.def}</div>
-                ${p.pueblos ? `<div class="palabra-pueblos">📍 <strong>También documentada en:</strong> ${p.pueblos}</div>` : ''}
+                ${p.pueblos ? `<div class="palabra-pueblos">📍 <strong>Extensión / Notas:</strong> ${p.pueblos}</div>` : ''}
                 <div class="palabra-ejemplo">💬 <strong>Ejemplo:</strong> ${p.ejemplo}</div>
               </div>
             `;
