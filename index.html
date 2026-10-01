@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Léxico y Pueblos de Jaén</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; display: flex; height: 100vh; background-color: #f4f6f8; }
+    #map { flex: 1; height: 100%; }
+    #sidebar { width: 400px; height: 100%; background: #ffffff; box-shadow: -2px 0 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; z-index: 1000; }
+    .sidebar-header { background: #1B4D3E; color: white; padding: 20px; border-bottom: 4px solid #2C6B56; }
+    .sidebar-header h1 { font-size: 1.3rem; font-weight: 600; margin-bottom: 5px; }
+    .sidebar-header p { font-size: 0.85rem; opacity: 0.85; }
+    .sidebar-content { padding: 20px; overflow-y: auto; flex: 1; }
+    .pueblo-badge { display: inline-block; background: #e8f5e9; color: #1B4D3E; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; margin-bottom: 12px; }
+    .categoria-titulo { font-size: 0.95rem; font-weight: bold; color: #2C6B56; margin-top: 15px; margin-bottom: 8px; border-bottom: 1px dashed #2C6B56; padding-bottom: 3px; }
+    .palabra-card { background: #f9fbf9; border-left: 4px solid #1B4D3E; padding: 14px; border-radius: 6px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .palabra-nombre { font-size: 1.1rem; font-weight: bold; color: #111; margin-bottom: 4px; }
+    .palabra-tipo { font-size: 0.85rem; color: #666; font-style: italic; margin-bottom: 8px; }
+    .palabra-def { font-size: 0.92rem; color: #333; margin: 6px 0; line-height: 1.4; }
+    .palabra-ejemplo { font-size: 0.88rem; color: #2C6B56; background: #eef6f2; padding: 6px 10px; border-radius: 4px; margin-top: 8px; }
+    .empty-state { text-align: center; color: #888; margin-top: 40px; font-size: 0.95rem; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="sidebar">
+    <div class="sidebar-header">
+      <h1>Vocabulario de los Pueblos de Jaén</h1>
+      <p>Haz clic en un municipio para consultar sus palabras típicas</p>
+    </div>
+    <div class="sidebar-content">
+      <div id="panel-informacion">
+        <div class="empty-state">
+          📍 <br><br>
+          <strong>Selecciona un pueblo en el mapa</strong><br>
+          Haz clic sobre cualquier municipio para desplegar sus términos locales, categoría, definición y ejemplos.
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([38.00, -3.50], 9);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap | Atlas Léxico de Jaén'
+    }).addTo(map);
+
+    const baseDatosJaen = {
+      "Lupión": {
+        comarca: "La Loma",
+        coordenadas: [37.9961, -3.5469],
+        categorias: {
+          "🏠 Vida Cotidiana / Léxico Local": [
+            { 
+              termino: "Almanaque", 
+              tipo: "Sustantivo",
+              def: "Calendario en el que aparecen los días de la semana y del año, junto con información como las festividades religiosas (los santos) y las fases de la Luna.", 
+              ejemplo: "«Mira el almanaque a ver qué santo es hoy»." 
+            }
+          ]
+        }
+      },
+      "Úbeda": {
+        comarca: "La Loma",
+        coordenadas: [38.0078, -3.3686],
+        categorias: {
+          "🌾 Campo": [
+            { 
+              termino: "Esaire", 
+              tipo: "Sustantivo",
+              def: "Airecillo suave o brisa fresca.", 
+              ejemplo: "«Corre un esaire muy bueno en la terraza»." 
+            }
+          ]
+        }
+      },
+      "Baeza": {
+        comarca: "La Loma",
+        coordenadas: [37.9936, -3.4688],
+        categorias: {
+          "🏠 Vida Cotidiana": [
+            { 
+              termino: "Abonico", 
+              tipo: "Adverbio",
+              def: "Hablar o actuar despacio, con sigilo o en voz baja.", 
+              ejemplo: "«Habla abonico que se va a despertar el niño»." 
+            }
+          ]
+        }
+      },
+      "Cazorla": {
+        comarca: "Sierra de Cazorla",
+        coordenadas: [37.9137, -3.0031],
+        categorias: {
+          "🍲 Gastronomía": [
+            { 
+              termino: "Rin-ran", 
+              tipo: "Sustantivo",
+              def: "Plato tradicional a base de patatas cocidas, pimientos secos, bacalao y aceite de oliva.", 
+              ejemplo: "«Para comer han preparado un rin-ran casero»." 
+            }
+          ]
+        }
+      },
+      "Alcalá la Real": {
+        comarca: "Sierra Sur",
+        coordenadas: [37.4614, -3.9231],
+        categorias: {
+          "🏠 Vida Cotidiana": [
+            { 
+              termino: "Apolismado", 
+              tipo: "Adjetivo",
+              def: "Dícese de una fruta o cosa aplastada o abollada.", 
+              ejemplo: "«No pises la fruta que la vas a dejar apolismada»." 
+            }
+          ]
+        }
+      },
+      "Andújar": {
+        comarca: "Campiña de Jaén",
+        coordenadas: [38.0392, -4.0536],
+        categorias: {
+          "🌾 Campo": [
+            { 
+              termino: "Vara", 
+              tipo: "Sustantivo",
+              def: "Vara de madera empleada en la recolección de la aceituna.", 
+              ejemplo: "«Prepara las varas que mañana empezamos la recogida»." 
+            }
+          ]
+        }
+      },
+      "Jaén (Capital)": {
+        comarca: "Comarca Metropolitana",
+        coordenadas: [37.7796, -3.7849],
+        categorias: {
+          "🍲 Gastronomía": [
+            { 
+              termino: "Pipirrana", 
+              tipo: "Sustantivo",
+              def: "Ensalada tradicional de tomate, pimiento, huevo cocido y atún bien majados con aceite de oliva.", 
+              ejemplo: "«En verano no hay nada mejor que una buena pipirrana bien fresquita»." 
+            }
+          ]
+        }
+      }
+    };
+
+    Object.keys(baseDatosJaen).forEach(nombrePueblo => {
+      const pueblo = baseDatosJaen[nombrePueblo];
+      const marker = L.marker(pueblo.coordenadas).addTo(map);
+
+      marker.bindTooltip(`<b>📍 ${nombrePueblo}</b>`);
+
+      marker.on('click', () => {
+        mostrarPalabrasPueblo(nombrePueblo);
+      });
+    });
+
+    function mostrarPalabrasPueblo(nombrePueblo) {
+      const pueblo = baseDatosJaen[nombrePueblo];
+      const panel = document.getElementById('panel-informacion');
+
+      let html = `<span class="pueblo-badge">📍 ${pueblo.comarca}</span>`;
+      html += `<h2 style="color:#1B4D3E; margin-bottom:15px;">${nombrePueblo}</h2>`;
+
+      for (let categoria in pueblo.categorias) {
+        html += `<div class="categoria-titulo">${categoria}</div>`;
+        pueblo.categorias[categoria].forEach(p => {
+          html += `
+            <div class="palabra-card">
+              <div class="palabra-nombre">${p.termino}</div>
+              <div class="palabra-tipo">📖 ${p.tipo}</div>
+              <div class="palabra-def">${p.def}</div>
+              <div class="palabra-ejemplo">🗣️ <strong>Ejemplo:</strong> ${p.ejemplo}</div>
+            </div>
+          `;
+        });
+      }
+
+      panel.innerHTML = html;
+    }
+  </script>
+</body>
+</html>
